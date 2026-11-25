@@ -15,6 +15,9 @@ def main():
     # The gate needs 1-140 characters of non-whitespace text.
     if not (1 <= len(LINE) <= 140) or not LINE.strip():
         raise SystemExit(f"invalid resignation line length: {len(LINE)} characters")
+    # A resignation letter is one line, not a line plus a trailing postscript.
+    if LINE != LINE.strip():
+        raise SystemExit("resignation line has leading or trailing whitespace")
     with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
         f.write(LINE + "\n")
     # Read it back: the entry must be exactly one line of UTF-8 text.
